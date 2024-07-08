@@ -23,6 +23,10 @@
             height: 100vh;
             z-index: -1;
         }
+        .navbar-hidden {
+        transform: translateY(-100%);
+        transition: transform 0.3s ease-out;
+    }
         </style>
         <title>{{names}} &#x1F1F3;&#x1F1F5;</title>
     </head>
@@ -38,7 +42,7 @@
             <li><a class="nav-link" href="index">Home</a></li>
             <li><a class="nav-link" href="blog">Blog</a></li>
             <li><a class="nav-link" href="about">About</a></li>
-            <li><a class="nav-link" href="{{resume}}">Resume</a></li>
+            <li><a class="" href="{{resume}}">Resume</a></li>
             <li><a class="nav-link" href="contact">Contact</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
@@ -54,6 +58,9 @@
         {% endblock %} 
         {% block blog %}
         {% endblock %} 
+        {% block fullblog %}
+        {% endblock %} 
+
     <script>
         // JavaScript to set active class based on current URL
         document.addEventListener("DOMContentLoaded", function() {
@@ -67,6 +74,32 @@
             });
         });
         </script>
+
+    <script>
+        
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('.navbar');
+    let navbarHeight = navbar.offsetHeight;
+    let didScroll = false;
+
+    window.addEventListener("scroll", function(){
+    didScroll = true;
+    });
+
+    setInterval(function() {
+    if (didScroll) {
+        if (window.pageYOffset > navbarHeight) {
+            // Scrolled down past the navbar, hide it
+            navbar.classList.add('navbar-hidden');
+        } else {
+            // Scrolled back to the top, show it
+            navbar.classList.remove('navbar-hidden');
+        }
+        didScroll = false;
+    }
+    },-250);
+    </script>
+
         <script src="{% static 'main.js' %}"></script>
     </body>
     </html>

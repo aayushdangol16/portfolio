@@ -81,3 +81,16 @@ def blog(request):
         'articles':articles
     }
     return render(request,'blog.html',contexts)
+
+def get_article(request,id):
+    context=Yourself.objects.all()
+    resumes=Resume.objects.all()
+    articles=Article.objects.get(id=id)
+    names = [contexts.name for contexts in context]
+    resume=[resume.resume_file.url for resume in resumes]
+    contexts={
+        'names':names[0],
+        'articles':articles,
+        'resume':resume[0]
+    }
+    return render(request,'fullblog.html',contexts)
